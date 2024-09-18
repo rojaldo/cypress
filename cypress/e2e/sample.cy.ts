@@ -8,6 +8,15 @@ describe('template spec', () => {
 
     // find an element with type search class oo-ui-inputWidget-input and check if values is Cypress
     cy.get('.oo-ui-inputWidget-input[type="search"]').should('have.value', 'Cypress');
+    // get the value of tag with attribute data-mw-num-results-total 
+
+    cy.get('.results-info')
+      .invoke('attr', 'data-mw-num-results-total')
+      .then((total) => {
+        expect(Number(total)).to.be.greaterThan(0);
+      });
+
+
   })
 
   xit('Google failed test', () => {
