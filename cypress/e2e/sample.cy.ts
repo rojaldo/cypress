@@ -1,5 +1,31 @@
 describe('template spec', () => {
 
+  let buttons = {
+    '0': 'button:nth-child(14)',
+    '1': 'button:nth-child(9)',
+    '2': 'button:nth-child(10)',
+    '3': 'button:nth-child(11)',
+    '4': 'button:nth-child(5)',
+    '5': 'button:nth-child(6)',
+    '6': 'button:nth-child(7)',
+    '7': 'button:nth-child(1)',
+    '8': '.calc-button-row > button:nth-child(2)',
+    '9': 'button:nth-child(3)',
+    '+': '.opt:nth-child(12)',
+    '-': '.opt:nth-child(8)',
+    '*': '.opt:nth-child(4)',
+    '/': '.opt:nth-child(16)',
+    '=': '.opt:nth-child(15)'
+  }
+
+  let operations = [
+    { operation: '5+3=', result: '8' },
+    { operation: '0/0=', result: 'NaN' },
+    { operation: '5*3=', result: '15' },
+    { operation: '5-3=', result: '2' },
+
+  ]
+
   xit('Wikipedia Test', () => {
     cy.visit('https://www.wikipedia.com')
     cy.get('#searchInput')
@@ -26,7 +52,26 @@ describe('template spec', () => {
       .type('{enter}');
   });
 
-  it('Check that 5+3=8', () => {
+  operations.forEach((op) => {
+    it(`Check that ${op.operation}${op.result}`, () => {
+      cy.visit('http://localhost:4200/calculator');
+      // check that page contains the text Calculator
+      let operation = op.operation;
+      let result = op.result;
+      for (let i = 0; i < operation.length; i++) {
+        let button = operation.charAt(i);
+        cy.get(buttons[button]).click();
+      }
+      // expect text to be 5+3=
+      cy.get('#calc-operation').should('have.text', operation);
+      // expect result to be 8
+      cy.get('#calc-typed').should('have.text', result);
+
+    });
+  });
+    
+
+  xit('Check that 5+3=8', () => {
     cy.visit('http://localhost:4200/calculator');
     // check that page contains the text Calculator
     cy.get('button:nth-child(6)').click();
@@ -41,7 +86,7 @@ describe('template spec', () => {
 
   });
 
-  it('Check that 0/0=NaN', () => {
+  xit('Check that 0/0=NaN', () => {
     cy.visit('http://localhost:4200/calculator');
     // check that page contains the text Calculator
     cy.get('button:nth-child(14)').click();
