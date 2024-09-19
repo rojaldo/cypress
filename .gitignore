@@ -1,6 +1,12 @@
 # Logs
 logs
 *.log
+# exclude mp4
+*.mp4
+#exclude images
+*.png
+*.jpg
+*.jpeg
 
 # Runtime data
 pids

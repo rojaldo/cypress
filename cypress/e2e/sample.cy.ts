@@ -26,6 +26,10 @@ describe('template spec', () => {
 
   ]
 
+  beforeEach(() => {
+    cy.visit('http://localhost:4200/calculator');
+  });
+
   xit('Wikipedia Test', () => {
     cy.visit('https://www.wikipedia.com')
     cy.get('#searchInput')
@@ -54,7 +58,6 @@ describe('template spec', () => {
 
   operations.forEach((op) => {
     it(`Check that ${op.operation}${op.result}`, () => {
-      cy.visit('http://localhost:4200/calculator');
       // check that page contains the text Calculator
       let operation = op.operation;
       let result = op.result;
@@ -66,6 +69,7 @@ describe('template spec', () => {
       cy.get('#calc-operation').should('have.text', operation);
       // expect result to be 8
       cy.get('#calc-typed').should('have.text', result);
+      cy.screenshot();
 
     });
   });
