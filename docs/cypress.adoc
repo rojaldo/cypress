@@ -184,7 +184,6 @@ Los bloques de construcción de pruebas en Cypress se utilizan para organizar y 
 * *afterEach:* El bloque afterEach se utiliza para definir los pasos que se ejecutarán después de cada test. Se utiliza para limpiar y restablecer el entorno de prueba después de cada test.
 
 .Un ejemplo de estructura de tests con Cypress sería:
-[source,javascript]
 ```
 describe('Ejemplo de estructura de tests', () => {
   before(() => {
@@ -235,7 +234,6 @@ El primer paso para interactuar con los elementos de la interfaz de usuario en C
 Tenemos la función cy.visit() que nos permite visitar una página web. 
 
 Un ejemplo en una estructura de tests con Cypress sería:
-[source,javascript]
 ```
 describe('Ejemplo de estructura de tests', () => {
   context('Contexto 1', () => {
@@ -247,7 +245,6 @@ describe('Ejemplo de estructura de tests', () => {
 ```
 
 .Para localizar elementos en la interfaz, podemos usar la función cy.get().
-[source,javascript]
 ```
 describe('Ejemplo de estructura de tests', () => {
   context('Contexto 1', () => {
@@ -269,7 +266,6 @@ describe('Ejemplo de estructura de tests', () => {
 * selectores CSS
 
 .Un ejemplo con todos estos tipos de localización sería:
-[source,javascript]
 ```
 describre('Ejemplo con todos los selectores: ', () => {
   it('Ejemplo de localización por id', () => {
@@ -318,7 +314,6 @@ En Cypress tenemos una serie de acciones para interaccionar con los elementos de
 * *submit*: envía un formulario
 
 .Un ejemplo de interacción con un elemento sería:
-[source,javascript]
 ```
 describe('Ejemplo de interacción con elementos', () => {
   it('Ejemplo de click', () => {
@@ -378,7 +373,6 @@ describe('Ejemplo de interacción con elementos', () => {
 === Validación de elementos
 
 .Para validar que un elemento es visible, podemos usar la función cy.get().should('be.visible').
-[source,javascript]
 ```
 describe('Ejemplo de validación de elementos visibles', () => {
   it('Ejemplo de validación de elementos visibles', () => {
@@ -420,7 +414,6 @@ describe('Ejemplo de validación de elementos visibles', () => {
 
 
 .Un ejemplo de validación de elementos sería:
-[source,javascript]
 ```
 describe('Ejemplo de validación de elementos', () => {
   it('Ejemplo de validación de elementos visibles', () => {
@@ -505,3 +498,176 @@ describe('Ejemplo de espera implícita', () => {
 });
 ```
 
+=== Fixtures y datos de prueba
+
+Las fixtures son archivos JSON que contienen datos de prueba que se pueden utilizar en las pruebas de Cypress. Estos archivos se almacenan en la carpeta fixtures del proyecto y se pueden cargar en las pruebas utilizando la función cy.fixture().
+
+.Los fixtures son útiles cuando deseas:
+
+* **Simular respuestas de una API:** En lugar de hacer solicitudes reales a una API, puedes cargar respuestas simuladas desde archivos de fixtures.
+* **Proporcionar datos de prueba:** Puedes tener un conjunto de datos específicos para ejecutar tus pruebas y validarlas.
+* **Reducir la dependencia de fuentes externas:** Al usar datos locales en lugar de datos en vivo, tus pruebas serán más rápidas y confiables.
+
+.Un ejemplo de uso de fixtures sería:
+[source,javascript]
+```
+describe('Ejemplo de uso de fixtures', () => {
+  it('Ejemplo de uso de fixtures', () => {
+    cy.fixture('example.json').then((data) => {
+      cy.log(data);
+    });
+  });
+});
+```
+
+.Siendo el contenido del archivo example.json:
+[source,json]
+```
+{
+  "name": "Ejemplo",
+  "description": "Esto es un ejemplo de fixture"
+}
+```
+
+=== Variables y alias
+
+En Cypress, podemos utilizar variables y alias para almacenar y reutilizar valores en nuestras pruebas. Las variables nos permiten almacenar valores y reutilizarlos en diferentes partes de la prueba, mientras que los alias nos permiten asignar un nombre a un elemento y referenciarlo posteriormente.
+
+.Las variables se pueden declarar y utilizar de la siguiente forma:
+```
+describe('Ejemplo de uso de variables', () => {
+  it('Ejemplo de uso de variables', () => {
+    const
+      username = 'usuario',
+      password = 'contraseña';
+
+    cy.get('input[name="username"]').type(username);
+    cy.get('input[name="password"]').type(password);
+  });
+});
+```
+
+.Los alias se pueden declarar y utilizar de la siguiente forma:
+```
+describe('Ejemplo de uso de alias', () => {
+  it('Ejemplo de uso de alias', () => {
+    cy.get('button').as('boton');
+    cy.get('@boton').click();
+  });
+});
+```
+
+=== Comandos personalizados
+
+En Cypress, podemos crear comandos personalizados para realizar acciones comunes en nuestras pruebas. Estos comandos nos permiten encapsular la lógica de prueba en funciones reutilizables y mejorar la legibilidad y mantenibilidad de las pruebas.
+
+.Para crear un comando personalizado, podemos hacer lo siguiente:
+```
+Cypress.Commands.add('login', (username, password) => {
+  cy.get('input[name="username"]').type(username);
+  cy.get('input[name="password"]').type(password);
+  cy.get('button').click();
+});
+```
+
+.Y para utilizar el comando personalizado, podemos hacer lo siguiente:
+```
+describe('Ejemplo de uso de comandos personalizados', () => {
+  it('Ejemplo de uso de comandos personalizados', () => {
+    cy.login('usuario', 'contraseña');
+  });
+});
+```
+
+=== Pruebas condicionales
+
+Podemos realizar pruebas condicionales para validar el comportamiento de la aplicación en diferentes escenarios. Las pruebas condicionales nos permiten ejecutar diferentes acciones en función de una condición específica y validar el resultado esperado.
+
+.Para realizar una prueba condicional, podemos hacer lo siguiente:
+```
+describe('Ejemplo de prueba condicional', () => {
+  it('Ejemplo de prueba condicional', () => {
+    cy.get('button').then(($button) => {
+      if ($button.is(':visible')) {
+        cy.log('El botón es visible');
+      } else {
+        cy.log('El botón no es visible');
+      }
+    });
+  });
+});
+```
+
+=== Pruebas asincrónicas
+
+Las pruebas asincrónicas son aquellas que requieren esperar a que se complete una operación asíncrona antes de continuar con la ejecución de la prueba. En Cypress, podemos utilizar comandos y funciones asincrónicas para manejar operaciones asíncronas y asegurarnos de que las pruebas se ejecuten correctamente.
+
+.Para realizar una prueba asincrónica, podemos hacer lo siguiente:
+```
+describe('Ejemplo de prueba asincrónica', () => {
+  it('Ejemplo de prueba asincrónica', () => {
+    cy.get('button').click().then(() => {
+      cy.log('El botón ha sido clicado');
+    });
+  });
+});
+```
+
+=== Pruebas de regresión visual
+
+Las pruebas de regresión visual son aquellas que comparan imágenes capturadas de la aplicación con imágenes de referencia previamente guardadas. Estas pruebas permiten detectar cambios visuales no deseados en la interfaz de usuario y garantizar que la aplicación se vea como se espera en diferentes escenarios.
+
+.Para realizar una prueba de regresión visual, podemos hacer lo siguiente:
+```
+describe('Ejemplo de prueba de regresión visual', () => {
+  it('Ejemplo de prueba de regresión visual', () => {
+    cy.get('.mi-elemento').toMatchImageSnapshot();
+  });
+});
+```
+
+=== Pruebas de API
+
+Las pruebas de API son aquellas que validan el comportamiento de una API en diferentes escenarios. Estas pruebas permiten verificar que la API responde correctamente a las solicitudes y devuelve los datos esperados.
+
+Usamos la función cy.request() para realizar una solicitud a una API y validar la respuesta, el estado y los datos devueltos por la API. cy.request() devuelve una promesa que podemos manejar con then() y realizar las validaciones necesarias.
+
+.Los métodos que podemos utilizar para realizar pruebas de API son:
+* *GET*: cy.request('GET', 'https://api.example.com/data')
+* *POST*: cy.request('POST', 'https://api.example.com/data', { data: 'example' })
+* *PUT*: cy.request('PUT', 'https://api.example.com/data', { data: 'example' })
+* *DELETE*: cy.request('DELETE', 'https://api.example.com/data')
+* *PATCH*: cy.request('PATCH', 'https://api.example.com/data', { data: 'example' })
+* *HEAD*: cy.request('HEAD', 'https://api.example.com/data')
+* *OPTIONS*: cy.request('OPTIONS', 'https://api.example.com/data')
+
+.Para realizar una prueba de API, podemos hacer lo siguiente:
+```
+describe('Ejemplo de prueba de API', () => {
+  it('Ejemplo de prueba de API', () => {
+    cy.request('GET', 'https://api.example.com/data').then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body).to.have.property('data');
+    });
+  });
+});
+```
+
+=== Gestión de errores
+
+Podemos gestionar errores y excepciones para manejar situaciones inesperadas y garantizar que las pruebas se ejecuten correctamente. Podemos utilizar comandos y funciones de Cypress para capturar errores, mostrar mensajes de error y realizar acciones en caso de fallo.
+
+Uno de los mecanismos que podemos utilizar para gestionar errores es cy.on('fail', () => {}), que nos permite capturar errores y realizar acciones personalizadas en caso de fallo.
+
+.Para gestionar errores en Cypress, podemos hacer lo siguiente:
+```
+describe('Ejemplo de gestión de errores', () => {
+  it('Ejemplo de gestión de errores', () => {
+    cy.on('fail', (error) => {
+      cy.log(error.message);
+    });
+
+    cy.get('button').click();
+  });
+});
+```

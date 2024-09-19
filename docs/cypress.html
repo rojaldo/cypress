@@ -1164,12 +1164,238 @@ npx tsc --init</code></pre>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_fixtures_y_datos_de_prueba">Fixtures y datos de prueba</h3>
+<div class="paragraph">
+<p>Las fixtures son archivos JSON que contienen datos de prueba que se pueden utilizar en las pruebas de Cypress. Estos archivos se almacenan en la carpeta fixtures del proyecto y se pueden cargar en las pruebas utilizando la función cy.fixture().</p>
+</div>
+<div class="ulist">
+<div class="title">Los fixtures son útiles cuando deseas:</div>
+<ul>
+<li>
+<p><strong>Simular respuestas de una API:</strong> En lugar de hacer solicitudes reales a una API, puedes cargar respuestas simuladas desde archivos de fixtures.</p>
+</li>
+<li>
+<p><strong>Proporcionar datos de prueba:</strong> Puedes tener un conjunto de datos específicos para ejecutar tus pruebas y validarlas.</p>
+</li>
+<li>
+<p><strong>Reducir la dependencia de fuentes externas:</strong> Al usar datos locales en lugar de datos en vivo, tus pruebas serán más rápidas y confiables.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Un ejemplo de uso de fixtures sería:</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">describe('Ejemplo de uso de fixtures', () =&gt; {
+  it('Ejemplo de uso de fixtures', () =&gt; {
+    cy.fixture('example.json').then((data) =&gt; {
+      cy.log(data);
+    });
+  });
+});</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Siendo el contenido del archivo example.json:</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">{
+  "name": "Ejemplo",
+  "description": "Esto es un ejemplo de fixture"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_variables_y_alias">Variables y alias</h3>
+<div class="paragraph">
+<p>En Cypress, podemos utilizar variables y alias para almacenar y reutilizar valores en nuestras pruebas. Las variables nos permiten almacenar valores y reutilizarlos en diferentes partes de la prueba, mientras que los alias nos permiten asignar un nombre a un elemento y referenciarlo posteriormente.</p>
+</div>
+<div class="listingblock">
+<div class="title">Las variables se pueden declarar y utilizar de la siguiente forma:</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">describe('Ejemplo de uso de variables', () =&gt; {
+  it('Ejemplo de uso de variables', () =&gt; {
+    const
+      username = 'usuario',
+      password = 'contraseña';
+
+    cy.get('input[name="username"]').type(username);
+    cy.get('input[name="password"]').type(password);
+  });
+});</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Los alias se pueden declarar y utilizar de la siguiente forma:</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">describe('Ejemplo de uso de alias', () =&gt; {
+  it('Ejemplo de uso de alias', () =&gt; {
+    cy.get('button').as('boton');
+    cy.get('@boton').click();
+  });
+});</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_comandos_personalizados">Comandos personalizados</h3>
+<div class="paragraph">
+<p>En Cypress, podemos crear comandos personalizados para realizar acciones comunes en nuestras pruebas. Estos comandos nos permiten encapsular la lógica de prueba en funciones reutilizables y mejorar la legibilidad y mantenibilidad de las pruebas.</p>
+</div>
+<div class="listingblock">
+<div class="title">Para crear un comando personalizado, podemos hacer lo siguiente:</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">Cypress.Commands.add('login', (username, password) =&gt; {
+  cy.get('input[name="username"]').type(username);
+  cy.get('input[name="password"]').type(password);
+  cy.get('button').click();
+});</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Y para utilizar el comando personalizado, podemos hacer lo siguiente:</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">describe('Ejemplo de uso de comandos personalizados', () =&gt; {
+  it('Ejemplo de uso de comandos personalizados', () =&gt; {
+    cy.login('usuario', 'contraseña');
+  });
+});</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_pruebas_condicionales">Pruebas condicionales</h3>
+<div class="paragraph">
+<p>Podemos realizar pruebas condicionales para validar el comportamiento de la aplicación en diferentes escenarios. Las pruebas condicionales nos permiten ejecutar diferentes acciones en función de una condición específica y validar el resultado esperado.</p>
+</div>
+<div class="listingblock">
+<div class="title">Para realizar una prueba condicional, podemos hacer lo siguiente:</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">describe('Ejemplo de prueba condicional', () =&gt; {
+  it('Ejemplo de prueba condicional', () =&gt; {
+    cy.get('button').then(($button) =&gt; {
+      if ($button.is(':visible')) {
+        cy.log('El botón es visible');
+      } else {
+        cy.log('El botón no es visible');
+      }
+    });
+  });
+});</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_pruebas_asincrónicas">Pruebas asincrónicas</h3>
+<div class="paragraph">
+<p>Las pruebas asincrónicas son aquellas que requieren esperar a que se complete una operación asíncrona antes de continuar con la ejecución de la prueba. En Cypress, podemos utilizar comandos y funciones asincrónicas para manejar operaciones asíncronas y asegurarnos de que las pruebas se ejecuten correctamente.</p>
+</div>
+<div class="listingblock">
+<div class="title">Para realizar una prueba asincrónica, podemos hacer lo siguiente:</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">describe('Ejemplo de prueba asincrónica', () =&gt; {
+  it('Ejemplo de prueba asincrónica', () =&gt; {
+    cy.get('button').click().then(() =&gt; {
+      cy.log('El botón ha sido clicado');
+    });
+  });
+});</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_pruebas_de_regresión_visual">Pruebas de regresión visual</h3>
+<div class="paragraph">
+<p>Las pruebas de regresión visual son aquellas que comparan imágenes capturadas de la aplicación con imágenes de referencia previamente guardadas. Estas pruebas permiten detectar cambios visuales no deseados en la interfaz de usuario y garantizar que la aplicación se vea como se espera en diferentes escenarios.</p>
+</div>
+<div class="listingblock">
+<div class="title">Para realizar una prueba de regresión visual, podemos hacer lo siguiente:</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">describe('Ejemplo de prueba de regresión visual', () =&gt; {
+  it('Ejemplo de prueba de regresión visual', () =&gt; {
+    cy.get('.mi-elemento').toMatchImageSnapshot();
+  });
+});</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_pruebas_de_api">Pruebas de API</h3>
+<div class="paragraph">
+<p>Las pruebas de API son aquellas que validan el comportamiento de una API en diferentes escenarios. Estas pruebas permiten verificar que la API responde correctamente a las solicitudes y devuelve los datos esperados.</p>
+</div>
+<div class="paragraph">
+<p>Usamos la función cy.request() para realizar una solicitud a una API y validar la respuesta, el estado y los datos devueltos por la API. cy.request() devuelve una promesa que podemos manejar con then() y realizar las validaciones necesarias.</p>
+</div>
+<div class="ulist">
+<div class="title">Los métodos que podemos utilizar para realizar pruebas de API son:</div>
+<ul>
+<li>
+<p><strong>GET</strong>: cy.request('GET', 'https://api.example.com/data')</p>
+</li>
+<li>
+<p><strong>POST</strong>: cy.request('POST', 'https://api.example.com/data', { data: 'example' })</p>
+</li>
+<li>
+<p><strong>PUT</strong>: cy.request('PUT', 'https://api.example.com/data', { data: 'example' })</p>
+</li>
+<li>
+<p><strong>DELETE</strong>: cy.request('DELETE', 'https://api.example.com/data')</p>
+</li>
+<li>
+<p><strong>PATCH</strong>: cy.request('PATCH', 'https://api.example.com/data', { data: 'example' })</p>
+</li>
+<li>
+<p><strong>HEAD</strong>: cy.request('HEAD', 'https://api.example.com/data')</p>
+</li>
+<li>
+<p><strong>OPTIONS</strong>: cy.request('OPTIONS', 'https://api.example.com/data')</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Para realizar una prueba de API, podemos hacer lo siguiente:</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">describe('Ejemplo de prueba de API', () =&gt; {
+  it('Ejemplo de prueba de API', () =&gt; {
+    cy.request('GET', 'https://api.example.com/data').then((response) =&gt; {
+      expect(response.status).to.eq(200);
+      expect(response.body).to.have.property('data');
+    });
+  });
+});</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_gestión_de_errores">Gestión de errores</h3>
+<div class="paragraph">
+<p>Podemos gestionar errores y excepciones para manejar situaciones inesperadas y garantizar que las pruebas se ejecuten correctamente. Podemos utilizar comandos y funciones de Cypress para capturar errores, mostrar mensajes de error y realizar acciones en caso de fallo.</p>
+</div>
+<div class="paragraph">
+<p>Uno de los mecanismos que podemos utilizar para gestionar errores es cy.on('fail', () &#8658; {}), que nos permite capturar errores y realizar acciones personalizadas en caso de fallo.</p>
+</div>
+<div class="listingblock">
+<div class="title">Para gestionar errores en Cypress, podemos hacer lo siguiente:</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">describe('Ejemplo de gestión de errores', () =&gt; {
+  it('Ejemplo de gestión de errores', () =&gt; {
+    cy.on('fail', (error) =&gt; {
+      cy.log(error.message);
+    });
+
+    cy.get('button').click();
+  });
+});</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-09-18 08:32:59 +0200
+Last updated 2024-09-19 08:03:35 +0200
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

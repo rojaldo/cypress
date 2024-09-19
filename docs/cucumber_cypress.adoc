@@ -1,0 +1,230 @@
+:source-highlighter: highlightjs
+
+= Cucumber
+
+== Introducción
+
+Cucumber es una herramienta de software que se utiliza para el desarrollo ágil y la práctica de pruebas de software bajo el enfoque del Desarrollo Guiado por el Comportamiento (BDD, por sus siglas en inglés - Behavior Driven Development). Cucumber utiliza un lenguaje natural y comprensible para todos los participantes del proyecto, incluso aquellos que no tienen conocimientos técnicos profundos. Esto se logra mediante el uso de Gherkin, que es un lenguaje de especificación diseñado para describir el comportamiento del software en un formato legible por humanos.
+
+
+== Sintaxis Gherkin
+
+=== Introducción
+
+La sintaxis Gherkin es un lenguaje de dominio específico (DSL) utilizado para escribir escenarios de pruebas en el marco de desarrollo de software llamado BDD (Behavior-Driven Development, Desarrollo Guiado por el Comportamiento). Gherkin es un lenguaje legible por humanos que permite a los desarrolladores, probadores y otras partes interesadas colaborar en la definición y comprensión de los requisitos y el comportamiento del software.
+
+La sintaxis Gherkin sigue una estructura simple y utiliza palabras clave para describir el comportamiento del sistema en términos de escenarios. Estos escenarios se pueden escribir en archivos con extensión ".feature" y generalmente se organizan en una estructura de características y escenarios.
+
+
+=== Planificación de escenarios
+
+La planificación de escenarios en BDD (Desarrollo Guiado por el Comportamiento) implica identificar y definir los diferentes casos de prueba que se deben cubrir para asegurar un comportamiento adecuado del software. 
+
+.BDD es una forma para que los equipos de software trabajen que cierra la brecha entre las personas de negocios y las personas técnicas mediante:
+* Incentivar la colaboración entre roles para construir una comprensión compartida del problema a resolver
+* Trabajar en iteraciones rápidas y pequeñas para aumentar la retroalimentación y el flujo de valor
+* Producir documentación del sistema que se comprueba automáticamente con el comportamiento del sistema
+
+
+.Aquí hay un enfoque paso a paso para la planificación de escenarios en BDD:
+* **1. Identificación de Funcionalidades:** 
+Identifica las principales funcionalidades o características del sistema que quieres abordar. Estas pueden provenir de los requisitos del cliente, historias de usuario, o cualquier otro documento de especificación.
+* **2. Colaboración y Revisión:**
+Reúne a los miembros del equipo, incluyendo desarrolladores, testers y stakeholders no técnicos. Colabora con ellos para entender las expectativas y validar las funcionalidades identificadas.
+
+* **3. Escritura de Especificaciones en Gherkin:**
+Escribe las especificaciones en Gherkin utilizando el formato "Feature", "Scenario", y pasos como "Given", "When", y "Then". Utiliza un lenguaje natural y estructurado para describir el comportamiento esperado del sistema.
+
+* **4. Priorización de Escenarios:**
+Prioriza los escenarios según su importancia y frecuencia de uso. Puedes utilizar criterios como la criticidad, la complejidad o la frecuencia de uso para establecer la prioridad.
+
+* **5. Identificación de Casos de frontera y Excepciones:**
+Asegúrate de incluir escenarios que aborden casos límite (casos de bordes) y situaciones excepcionales. Estos casos pueden revelar problemas que podrían no ser evidentes en situaciones típicas.
+
+* **6. Agrupación de Escenarios:**
+Agrupa los escenarios relacionados para facilitar la ejecución y mantenimiento de las pruebas. La agrupación puede basarse en características similares, áreas funcionales o cualquier otro criterio relevante.
+
+* **7. Revisión y Validación:**
+Realiza una revisión y validación adicional con los miembros del equipo. Asegúrate de que los escenarios sean comprensibles y cubran de manera adecuada las funcionalidades identificadas.
+
+* **8. Estimación de Esfuerzo:**
+Estima el esfuerzo requerido para implementar y ejecutar los escenarios planificados. Esto puede incluir la creación de step definitions, la configuración de entornos de prueba, y la ejecución de las pruebas.
+
+* **9. Integración con la Planificación General del Proyecto:**
+Integra la planificación de escenarios en el plan general del proyecto. Alinea los tiempos de ejecución de las pruebas con las fases de desarrollo y entrega del software.
+
+* **10. Automatización de Pruebas:**
+Considera la automatización de los escenarios para garantizar una ejecución eficiente y repetible. Utiliza herramientas como Cucumber junto con frameworks de prueba (como Selenium para pruebas de interfaz de usuario) según sea necesario.
+
+* **11. Actualización Continua:**
+Mantén la planificación de escenarios actualizada a medida que evolucionan los requisitos y se agregan nuevas funcionalidades. La planificación debe ser flexible y adaptarse a los cambios en el proyecto.
+
+=== Estructura de un archivo .feature
+
+Los archivos .feature se utilizan para definir las características y escenarios de una aplicación. Estos archivos se pueden crear en cualquier carpeta del proyecto, pero es recomendable crear una carpeta llamada "features" para almacenarlos.
+
+.Las palabras clave principales utilizadas en Gherkin son:
+
+* **Feature (Característica)**: Se utiliza para definir una característica del software que se está probando.
+* **Background (Antecedentes)**: Se utiliza para definir un conjunto de pasos que se ejecutarán antes de cada escenario.
+* **Scenario (Escenario)**: Describe un escenario particular dentro de una característica.
+* **Given (Dado)**: Define el estado inicial del sistema antes de que ocurra una determinada acción.
+* **When (Cuando)**: Describe la acción o evento que ocurre en el sistema.
+* **Then (Entonces)**: Define el resultado esperado después de que ocurra la acción.
+** **And (Y)**: Se utiliza para agregar más pasos a un escenario.
+** **But (Pero)**: Se utiliza para agregar más pasos a un escenario.
+
+.Un ejemplo de archivo .feature sería:
+[source,gherkin]
+----
+Característica: Ejemplo de característica
+  Escenario: Ejemplo de escenario
+    Dado que se carga la página de ejemplo
+    Cuando se hace click en el botón de ejemplo
+    Entonces se muestra el mensaje de ejemplo
+----
+
+.El mismo ejemplo en inglés sería:
+[source,gherkin]
+----
+Feature: Example feature
+  Background: Example background
+    Given the example page is loaded
+  Scenario: Example scenario
+    Given the example page is loaded
+    When the example button is clicked
+    Then the example message is displayed
+----
+
+.Ventajas de utilizar inglés en los archivos .feature
+* Es un lenguaje universal que puede ser entendido por (casi) cualquier persona.
+* Se utiliza en el mundo de la programación de forma habitual.
+* Se encuentra ampliamente extendido en el mundo de los negocios.
+* Obliga a usar términos específicos que ayudan a definir mejor los escenarios.
+
+
+== Cucumber con Cypress
+
+=== Instalación y configuración del entorno de trabajo
+
+.Cyress se puede instalar de dos formas:
+* Mediante el gestor de paquetes npm
+* Mediante el gestor de paquetes yarn
+
+.Instalación con npm
+[source,shell]
+----
+npm install cypress --save-dev
+----
+
+.Instalación con yarn
+[source,shell]
+----
+yarn add cypress --dev
+----
+
+== Configuración y estructura de proyectos en Cypress
+
+=== Configuración inicial del proyecto
+
+Con Cypress podemos crear un proyecto desde cero o utilizar un proyecto existente. 
+
+.Para crear un proyecto desde cero, podemos ejecutar el siguiente comando:
+[source,shell]
+----
+cypress open
+----
+
+.Para utilizar un proyecto existente, podemos ejecutar el siguiente comando:
+[source,shell]
+----
+cypress open --project path/to/project
+----
+
+=== Cypress con TypeScript
+
+Cypress es compatible con TypeScript. Para utilizar TypeScript en Cypress, debemos inicializar el proyecto con TypeScript y configurar el archivo de configuración de Cypress para que utilice TypeScript.
+
+.Para inicializar el proyecto con TypeScript, podemos ejecutar el siguiente comando:
+[source,shell]
+----
+mkdir e2e
+cd e2e
+npm init -y
+npm install cypress typescript
+npx tsc --init --types cypress --lib dom,es6
+----
+
+.En package.json, podemos añadir los siguientes scripts:
+[source,json]
+----
+"scripts": {
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
+}
+----
+
+.Podemos crear un test de prueba, con el siguiente contenido:
+[source,typescript]
+----
+it('should perform basic google search', () => {
+  cy.visit('https://google.com');
+  cy.get('[name="q"]')
+    .type('subscribe')
+    .type('{enter}');
+});
+----
+
+=== Instalación de Cucumber en Cypress
+
+.Para instalar Cucumber en Cypress, debemos seguir los siguientes pasos:
+* Instalar Cucumber y las dependencias necesarias:
+[source,shell]
+----
+npm install cypress-cucumber-preprocessor --save-dev
+----
+
+* Configurar Cypress para utilizar Cucumber:
+[source,json]
+----
+"cypress-cucumber-preprocessor": {
+  "nonGlobalStepDefinitions": true
+}
+----
+
+* Crear un archivo de features en la carpeta "cypress/e2e/duckduckgo.feature":
+[source,gherkin]
+----
+Feature: DuckDuckGo Search
+  I want to search something on DuckDuckGo
+
+  Scenario: Search something
+    Given I open DuckDuckGo page
+    When I search for "Cypress"
+    Then I see "Cypress" in the results
+----
+
+* Crear un archivo de step definitions en la carpeta "cypress/e2e/duckduckgo.ts":
+[source,typescript]
+----
+import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
+
+Given('I open DuckDuckGo page', () => {
+  cy.visit('https://duckduckgo.com');
+});
+
+When('I search for {string}', (searchTerm) => {
+  cy.get('#search_form_input_homepage').type(searchTerm);
+  cy.get('#search_button_homepage').click();
+});
+
+Then('I see {string} in the results', (searchTerm) => {
+  cy.get('#links').contains(searchTerm);
+});
+----
+
+* Ejecutar los tests con Cypress y Cucumber:
+[source,shell]
+----
+npx cypress open
+----
