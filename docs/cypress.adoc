@@ -671,3 +671,51 @@ describe('Ejemplo de gestión de errores', () => {
   });
 });
 ```
+
+== Stub
+Un **stub** en Cypress es una función que reemplaza temporalmente el comportamiento de una función o método real. Se usa para **simular** una función, permitiéndote controlar exactamente qué valor devuelve o cómo se comporta sin ejecutar la función original.
+
+=== Características principales:
+* **Control total**: Puedes definir el valor de retorno o comportamiento del stub.
+* **Reemplazo**: El stub sustituye completamente a la función original.
+* **Comportamiento definido**: Puedes configurar cómo responderá a diferentes argumentos.
+
+=== Ejemplo:
+```javascript
+const stub = cy.stub();
+stub.withArgs('hola').returns('mundo');
+```
+
+En este ejemplo, cuando la función stub recibe el argumento 'hola', devolverá 'mundo'.
+
+=== Cuándo usar un stub:
+
+* Cuando quieres evitar llamadas reales a una función (como peticiones a una API).
+* Cuando necesitas controlar el valor de retorno o los efectos secundarios de una función.
+
+== Spy Un spy en Cypress se usa para espiar una función o método existente sin modificar su comportamiento. El spy registra información sobre cómo se llamó la función (como los argumentos, el número de veces que fue invocada), pero no modifica lo que hace la función.
+
+=== Características principales:
+
+No modifica la función original: Solo observa su ejecución.
+Registro de llamadas: Captura información como los argumentos y la cantidad de veces que fue invocada.
+
+.Ejemplo:
+```javascript
+const spy = cy.spy(obj, 'metodo');
+```
+
+En este caso, el spy monitoriza las llamadas al método obj.metodo, registrando datos como cuántas veces fue invocado y con qué argumentos.
+
+=== Cuándo usar un spy:
+
+* Cuando quieres monitorizar cómo se usa una función sin modificar su comportamiento.
+* Para verificar si una función ha sido llamada con ciertos argumentos o cuántas veces ha sido invocada.
+
+
+== Diferencia clave entre stub y spy:
+
+* **Stub:** Reemplaza la función, permitiendo definir su comportamiento.
+* **Spy:** Solo observa la función, sin modificar su comportamiento.
+
+En resumen, utiliza un spy si solo necesitas observar el comportamiento de una función, y un stub si necesitas controlar o simular ese comportamiento.
