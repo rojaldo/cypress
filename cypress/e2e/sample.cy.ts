@@ -57,7 +57,7 @@ describe('template spec', () => {
   });
 
   operations.forEach((op) => {
-    it(`Check that ${op.operation}${op.result}`, () => {
+    xit(`Check that ${op.operation}${op.result}`, () => {
       // check that page contains the text Calculator
       let operation = op.operation;
       let result = op.result;
@@ -73,9 +73,44 @@ describe('template spec', () => {
 
     });
   });
+
+  xit('Check slider', () => {
+    cy.visit('http://localhost:4200/beers');
+    cy.get('.ngx-slider-pointer-max').invoke('val', 25).trigger('input');
+    cy.get('.ngx-slider-pointer-max').should('have.attr', 'aria-valuetext', '25');
+    cy.get('.ngx-slider-pointer-min').invoke('val', 5).trigger('input');
+    cy.get('.ngx-slider-combined').should('have.value', 5);
+    cy.screenshot();
+  });
+
+  xit('test -1 amount of cards', () => {
+    cy.request('https://opentdb.com/api.php?amount=-1')
+      .then((response) => {
+        expect(response.status).to.eq(400);
+
+      });
+  })
+
+  xit('test 1.5 amount of cards', () => {
+    cy.request('https://opentdb.com/api.php?amount=1.5')
+      .then((response) => {
+        expect(response.status).to.eq(400);
+
+      });
+  })
+
+  xit('test <some string> amount of cards', () => {
+    cy.request('https://opentdb.com/api.php?amount=hola')
+      .then((response) => {
+        expect(response.status).to.eq(400);
+
+      });
+  })
+
+
     
 
-  xit('Check that 5+3=8', () => {
+  it('Check that 5+3=8', () => {
     cy.visit('http://localhost:4200/calculator');
     // check that page contains the text Calculator
     cy.get('button:nth-child(6)').click();

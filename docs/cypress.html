@@ -1392,10 +1392,111 @@ npx tsc --init</code></pre>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_stub">Stub</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Un <strong>stub</strong> en Cypress es una función que reemplaza temporalmente el comportamiento de una función o método real. Se usa para <strong>simular</strong> una función, permitiéndote controlar exactamente qué valor devuelve o cómo se comporta sin ejecutar la función original.</p>
+</div>
+<div class="sect2">
+<h3 id="_características_principales">Características principales:</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Control total</strong>: Puedes definir el valor de retorno o comportamiento del stub.</p>
+</li>
+<li>
+<p><strong>Reemplazo</strong>: El stub sustituye completamente a la función original.</p>
+</li>
+<li>
+<p><strong>Comportamiento definido</strong>: Puedes configurar cómo responderá a diferentes argumentos.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ejemplo">Ejemplo:</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">const stub = cy.stub();
+stub.withArgs('hola').returns('mundo');</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>En este ejemplo, cuando la función stub recibe el argumento 'hola', devolverá 'mundo'.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cuándo_usar_un_stub">Cuándo usar un stub:</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Cuando quieres evitar llamadas reales a una función (como peticiones a una API).</p>
+</li>
+<li>
+<p>Cuando necesitas controlar el valor de retorno o los efectos secundarios de una función.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_spy_un_spy_en_cypress_se_usa_para_espiar_una_función_o_método_existente_sin_modificar_su_comportamiento_el_spy_registra_información_sobre_cómo_se_llamó_la_función_como_los_argumentos_el_número_de_veces_que_fue_invocada_pero_no_modifica_lo_que_hace_la_función">Spy Un spy en Cypress se usa para espiar una función o método existente sin modificar su comportamiento. El spy registra información sobre cómo se llamó la función (como los argumentos, el número de veces que fue invocada), pero no modifica lo que hace la función.</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_características_principales_2">Características principales:</h3>
+<div class="paragraph">
+<p>No modifica la función original: Solo observa su ejecución.
+Registro de llamadas: Captura información como los argumentos y la cantidad de veces que fue invocada.</p>
+</div>
+<div class="listingblock">
+<div class="title">Ejemplo:</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">const spy = cy.spy(obj, 'metodo');</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>En este caso, el spy monitoriza las llamadas al método obj.metodo, registrando datos como cuántas veces fue invocado y con qué argumentos.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cuándo_usar_un_spy">Cuándo usar un spy:</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Cuando quieres monitorizar cómo se usa una función sin modificar su comportamiento.</p>
+</li>
+<li>
+<p>Para verificar si una función ha sido llamada con ciertos argumentos o cuántas veces ha sido invocada.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_diferencia_clave_entre_stub_y_spy">Diferencia clave entre stub y spy:</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Stub:</strong> Reemplaza la función, permitiendo definir su comportamiento.</p>
+</li>
+<li>
+<p><strong>Spy:</strong> Solo observa la función, sin modificar su comportamiento.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>En resumen, utiliza un spy si solo necesitas observar el comportamiento de una función, y un stub si necesitas controlar o simular ese comportamiento.</p>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-09-19 08:03:35 +0200
+Last updated 2024-09-20 07:35:28 +0200
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
